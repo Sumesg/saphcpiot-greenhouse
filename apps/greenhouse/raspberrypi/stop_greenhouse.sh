@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudoProgID="sudo ./greenhous.py"
+sudoProgID="sudo ./greenhouse.py"
 pythonProgID="python3 ./greenhouse.py"
 cleanup_folder="/home/pi/code/greengarden/"
 cleanup="sudo ./cleanup_greenhouse.py"
