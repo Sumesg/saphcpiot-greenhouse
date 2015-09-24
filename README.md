@@ -27,13 +27,13 @@ Here a list of components used to build the scenario:
 - 1 Raspberry Pi B+ or Raspberry Pi 2
 - 1 AM2302 sensor
 - 1 Breadboard   
-- 3 led (Red, Green and Yellow)
-- 3 resistor 330Ω
+- 3 leds (Red, Green and Yellow)
+- 3 resistors 330Ω
 - 1 T-Cobbler cable
 - 1 DC 5V Relay module
 - 1 Lamp
 - 1 [Continuous Rotation Servo](http://www.adafruit.com/products/154)
-- 1 Additional 5v (2000mA) power supply
+- 1 Additional 5V (2000mA) power supply
 - Some jumpers
 - Plexiglass box (W: 50cm H: 25cm)
 
