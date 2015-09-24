@@ -93,6 +93,7 @@ and adapt the [configs.py](apps/remotecontroller/raspberrypi/configs.py) with yo
 
 #### Getting started with SAP HCP IoT
 Use the following documentations as step-by-step guide to get start with all you need on SAP HCP IoT:
+
 1. [Get HANA Cloud Platform Developer Account](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/account)
 2. [Enable Internet of Things Services](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/service)
 3. [Create Device Information in Internet of Things Services Cockpit](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/cockpit) and take note of device id, OAuth Token etc.
@@ -116,7 +117,7 @@ call "HCP"."HCP_GRANT_ROLE_TO_USER"('<user_id>trial.iotmmsxs::iotaccess', '<user
 
 #### Remote Controller App
 1. Open the Java project `~/saphcpiot-greenhouse/apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller` with Eclipse
-2. Adapt the [index.html](apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller/src/main/webapp/index.html`) file at the bottom of the page to reflect information from your SAP HCP IoT Cookpit
+2. Adapt the [index.html](apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller/src/main/webapp/index.html) file at the bottom of the page to reflect information from your SAP HCP IoT Cookpit
 3. [Compile with Maven and Deploy](https://github.com/SAP/iot-starterkit/tree/master/src/apps/java/consumption#compilation-and-deployment)
 
 ## Start & Stop
