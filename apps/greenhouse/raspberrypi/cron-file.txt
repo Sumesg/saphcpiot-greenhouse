@@ -1,0 +1,2 @@
+0 8 * * 1-5 /home/pi/code/greenhouse/start_greenhouse.sh > /tmp/start_greenhouse.log
+0 22 * * 1-5 /home/pi/code/greenhouse/stop_greenhouse.sh > /tmp/stop_greenhouse.log

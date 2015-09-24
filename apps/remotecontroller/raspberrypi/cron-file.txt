@@ -1,0 +1,2 @@
+5  8  * * 1-5 source /home/pi/code/remotecontroller/start_remotecontroller.sh > /tmp/start_remotecontroller.log
+55 19 * * 1-5 source /home/pi/code/remotecontroller/stop_remotecontroller.sh > /tmp/stop_remotecontroller.log

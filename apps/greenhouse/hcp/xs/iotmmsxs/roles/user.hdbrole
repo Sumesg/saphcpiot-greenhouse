@@ -1,0 +1,5 @@
+role <user_id>trial.iotmmsxs.roles::user
+{
+  catalog schema "NEO_<schema_id>": CREATE ANY, DROP, INDEX, SELECT, INSERT, UPDATE, DELETE;
+  application privilege: <user_id>trial.iotmmsxs::Basic;
+}

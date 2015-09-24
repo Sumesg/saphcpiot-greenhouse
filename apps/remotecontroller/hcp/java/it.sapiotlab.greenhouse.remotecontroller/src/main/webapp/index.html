@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta charset="UTF-8" />
+
+<link rel='shortcut icon' href='http://www.sap.com/favicon.ico' />
+<title>IoT Greenhouse Remote Controller - Demo Scenario</title>
+
+<script type="text/javascript">
+	// Attach an error handler to show the error page, if UI5 bootstrap fails
+	window.onerror = function() {
+		window.location = "error.html";
+	}
+</script>
+
+<script id="sap-ui-bootstrap" type="text/javascript"
+	src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+	data-sap-ui-theme="sap_bluecrystal" data-sap-ui-libs="sap.m,sap.viz,sap.ui.ux3"
+	data-sap-ui-language="en"></script>
+
+<script>
+	// Detach an error handler after UI5 bootstrap is done
+	window.onerror = undefined;
+</script>
+
+<script type="text/javascript">
+
+	function pushData(oData) {
+		var oPage = sap.ui.getCore().byId("iotpage");
+		var oSettings = oPage.getModel("settings").getData();
+		var sUrl = "data".concat("/", oSettings.deviceId);
+		oData.messageType = oSettings.toDeviceMessageTypeId;
+		jQuery.ajax({
+			type : "POST",
+			contentType : "application/json",
+			data : JSON.stringify(oData),
+			url : sUrl,
+			error : function(jqXHR, textStatus, errorThrown) {
+				var sMessage = jqXHR.status + " " + jqXHR.statusText
+						+ " " + jqXHR.responseText;
+				jQuery.sap.log.error("pushData()", sMessage, "index.html");
+				sap.m.MessageToast.show(sMessage);
+			},
+			success : function(oData, textStatus, jqXHR) {
+				if (oData === null || oData === undefined) {
+					var sMessage = "WARNING. Received a null or undefined response object.";
+					jQuery.sap.log.warning("pushData()", sMessage, "index.html");
+					sap.m.MessageToast.show(sMessage);
+					return;
+				}
+				var sMessage = oData.msg;
+				jQuery.sap.log.info("pushData()", sMessage, "index.html");
+				sap.m.MessageToast.show(sMessage);
+			}
+		});
+	}
+
+	function switchLAMP(bState) {
+		var operand = bState == true ? "1" : "0";
+		var oData = {
+			"method" : "http",
+			"sender" : "IoT Greenhouse",
+			"messageType" : "",
+			"messages" : [ {
+				"opcode" : "lamp",
+				"operand" : operand
+			} ]
+		};
+		pushData(oData);
+	}
+
+	function switchRoof(bState) {
+		var operand = bState == true ? "1" : "0";
+		var oData = {
+			"method" : "http",
+			"sender" : "IoT Greenhouse",
+			"messageType" : "",
+			"messages" : [ {
+				"opcode" : "roof",
+				"operand" : operand
+			} ]
+		};
+		pushData(oData);
+	}
+
+	function createUI() {
+		return new sap.m.List({
+			inset : true,
+			headerToolbar : new sap.m.Toolbar({
+				content : [ new sap.m.Label({
+					text : "Data to be sent to the device"
+				}) ]
+			}),
+			items : [
+			    new sap.m.InputListItem({
+					label : "Switch LAMP State",
+					content : new sap.m.Switch({
+						change : function(oEvent) {
+							var bState = oEvent.getParameter("state");
+							switchLAMP(bState);
+						}
+					})
+				}), new sap.m.InputListItem({
+					label : "Switch Roof State",
+					content : new sap.m.Switch({
+						change : function(oEvent) {
+							var bState = oEvent.getParameter("state");
+							switchRoof(bState);
+						}
+					})
+				})]
+		});
+	}
+
+	function createSettings() {
+		return new sap.m.Page({
+			title : "Settings",
+			backgroundDesign : sap.m.PageBackgroundDesign.List,
+			content : new sap.m.List({
+				items : [ new sap.m.InputListItem({
+					label : "Device ID",
+					content : new sap.m.Input({
+						value : "{settings>/deviceId}"
+					})
+				}), new sap.m.InputListItem({
+					label : "Device Type ID",
+					content : new sap.m.Input({
+						value : "{settings>/deviceTypeId}"
+					})
+				}), new sap.m.InputListItem({
+					label : "Message Type ID (From Device)",
+					content : new sap.m.Input({
+						value : "{settings>/fromDeviceMessageTypeId}"
+					})
+				}), new sap.m.InputListItem({
+					label : "Message Type ID (To Device)",
+					content : new sap.m.Input({
+						value : "{settings>/toDeviceMessageTypeId}"
+					})
+				}) ]
+			})
+		});
+	}
+
+	function createResponsivePopover() {
+		return new sap.m.ResponsivePopover("iotpopover", {
+			showHeader : false,
+			contentWidth : "542px",
+			contentHeight : "242px",
+			placement : sap.m.PlacementType.Bottom,
+			content : createSettings()
+		});
+	}
+
+	function createModel() {
+		var oModel = new sap.ui.model.json.JSONModel();
+		oModel.setData({
+			"deviceId" : "the_id_of_the_device_you_created_in_the_iot_cockpit",
+			"deviceTypeId" : "the_id_of_the_device_type_you_created_in_the_iot_cockpit",
+			"fromDeviceMessageTypeId" : "the_message_type_id_From_device_you_created_in_the_iot_cockpit",
+			"toDeviceMessageTypeId" : "the_message_type_id_To_device_you_created_in_the_iot_cockpit",
+		});
+
+		return oModel;
+	}
+
+	function createPage() {
+		var oPage = new sap.m.Page("iotpage",{
+			title : "Remote Controller for Greenhouse Demo Scenario",
+			headerContent : new sap.m.Button({
+				icon : "sap-icon://settings",
+				press : function(oEvent) {
+					var oPopover = sap.ui.getCore().byId("iotpopover");
+					if (!oPopover.isOpen()) {
+						oPopover.openBy(oEvent.getSource());
+					} else {
+						oPopover.close();
+					}
+				}
+			}),
+			content : [ createUI() ]
+		});
+
+		var oSettingsModel = createModel();
+		oPage.setModel(oSettingsModel, "settings");
+		oPage.addDependent(createResponsivePopover());
+		return oPage;
+	}
+
+	sap.ui.getCore().attachInit(function() {
+		var oShell = sap.m.Shell({
+			app : createPage()
+		});
+		oShell.placeAt("content");
+	});
+</script>
+
+</head>
+<body class="sapUiBody">
+	<div id="content"></div>
+</body>
+</html>

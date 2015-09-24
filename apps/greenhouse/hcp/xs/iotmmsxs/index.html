@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Sample IoT Greenhouse on SAP HCP</title>
+        <script type="text/javascript">
+        	// Attach an error handler to show the error page, if UI5 bootstrap fails
+        	window.onerror = function() {
+        		window.location = "error.html";
+        	}
+        </script>
+
+        <script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+                data-sap-ui-libs="sap.m, sap.viz"
+                data-sap-ui-theme="sap_bluecrystal">
+        </script>
+
+        <script>
+        	// Detach an error handler after UI5 bootstrap is done
+        	window.onerror = undefined;
+        </script>
+
+        <script src="resources/underscore.js" type="text/javascript"></script>
+        <script src="resources/underscoreAddon.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+        	jQuery.sap.require("sap.ui.core.IconPool");
+        	jQuery.sap.require("sap.ui.core.Icon");
+        	jQuery.sap.declare("sap.ui.customized.FontIconContainer");
+
+        	sap.ui.localResources("app");
+			var app = new sap.m.App({
+				initialPage : "idmainTiles"
+			});
+			var tilesPage = sap.ui.view({
+				id : "idmainTiles",
+				viewName : "app.tiles",
+				type : sap.ui.core.mvc.ViewType.JS
+			});
+
+			var temperatureChartPage = sap.ui.view({
+				id : "idTemperatureChartPage",
+				viewName : "app.tempChart",
+				type : sap.ui.core.mvc.ViewType.XML
+			});
+
+			var humidityChartPage = sap.ui.view({
+				id : "idHumidityChartPage",
+				viewName : "app.humChart",
+				type : sap.ui.core.mvc.ViewType.XML
+			});
+
+			app.addPage(tilesPage);
+			app.addPage(temperatureChartPage);
+			app.addPage(humidityChartPage);
+			app.placeAt("content");
+	    </script>
+    </head>
+    <body class="sapUiBody">
+    	<div id="content"></div>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+{
+    "exposed" : true ,
+    "default_file": "index.html",
+    "authentication" : [{ "method" : "Form" }],
+    "authorization":["<user_id>trial.iotmmsxs.roles::Basic"],
+    "prevent_xsrf": false,
+    "cors" : { "enabled" : true },
+    "force_ssl": false,
+    "enable_etags": true,
+    "anonymous_connection": null,
+    "cache_control": "no-cache, no-store"
+}
