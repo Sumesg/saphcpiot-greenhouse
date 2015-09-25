@@ -190,10 +190,7 @@ Run `crontab -e` and paste the following entries:
 
 You can find the `cron-file.txt` for both the applications.
 
-## Miscellaneous
-To access the RaspberryPi via SSH or other network protocols without a monitor and moving from network to network, we need to know the IP address. The [startup_mailer.py](app/greenhouse/raspberrypi/scripts/startup_mailer.py) utility do exactly this task. It's based on [RPi Email IP On Boot Debian](http://elinux.org/RPi_Email_IP_On_Boot_Debian) documentation by Cody Giles.
-
-## Further Resources
+### Further Resources
 
 - [SAP Hana Cloud Platform](http://hcp.sap.com/)
 - [SAP HANA Cloud Platform Developer Center](http://scn.sap.com/community/developer-center/cloud-platform)
