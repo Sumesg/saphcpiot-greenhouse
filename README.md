@@ -1,8 +1,8 @@
 # Greenhouse Demo Scenario
 
->This document is in DRAFT version, something can be missing or wrong. If you intend to re-create this scenario, you are smart enough to go through without a real step-by-step guide. Anyway, if you find errors, missing steps or typos  as well as if you need some help to implement the scenario, feel free to contact me. I really appreciate your help and your feedbacks.
+>**NOTE**: This document is in DRAFT version, something can be missing or wrong. If you intend to re-create this scenario, you are smart enough to go through without a real step-by-step guide. Anyway, if you find errors, missing steps or typos  as well as if you need some help to implement the scenario, feel free to contact me. I really appreciate your help and your feedbacks.
 
->This scenario doesn't want to represent the best way to do things using SAP HCP, but it's a first attempt to make things work. Code can be improved in readability, efficiency and design.
+>DISCLAIMER: This repository doesn't want to represent the best way to develop on SAP HCP or on RaspberryPi, but it's an attempt to make things work and, it works. Code can be improved in readability, efficiency and design.
 
 This is the repository for a real and complete end-to-end scenario (**Greenhouse**) built using the SAP Hana Cloud Platform IoT Services ([SAP HCP IoT](http://hcp.sap.com/)) and a [RaspberryPi](https://www.raspberrypi.org/) as a gateway.
 
@@ -44,24 +44,25 @@ In this section you can find a quick list of prerequisites, software and hardwar
 Discussing how to connect leds, lamp, servo motor and so on to the RaspberryPi as well as the SAP HCP IoT architecture, features etc. are outside the scope of this document; There are lots of resources available on line.
 
 ### RaspberryPi
+
 The RaspberryPi acts as a gateway. All the code is written in Python 3  (v. 3.2) and uses some python libs. Take a look to the following links to install all the requirements:
 
 - [RPi.GPIO](https://learn.adafruit.com/playing-sounds-and-using-buttons-with-raspberry-pi/install-python-module-rpi-dot-gpio)
 - [Requests](http://docs.python-requests.org/en/latest/)
 
-#### Getting started with SAP HCP IoT
-Use the following documentations as step-by-step guide to get start with all you need on SAP HCP IoT:
+### SAP HCP
+
+Getting started with SAP HCP IoT following the step-by-step guides:
 
 1. [Get HANA Cloud Platform Developer Account](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/account)
 2. [Enable Internet of Things Services](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/service)
-3. [Create Device Information in Internet of Things Services Cockpit](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/cockpit) and take note of device id, OAuth Token etc.
-4. [Deploy the Message Management Service (MMS)](Deploy the Message Management Service (MMS))
-5. [Consume the messages with HANA XS using XSJS and OData](https://github.com/SAP/iot-starterkit/tree/master/src/apps/xs/consumption)
 
 ## How to use it.
+
 In this section you can find steps to replicate the entire scenario. Make sure all the above prerequisites are in place.
 
 ### 1. RaspberryPi
+
 To handle the AM2302 sensor protocol (as well as for of DHT11 and DHT22) will use an utility developed by [Adafruit](http://adafruit.com) that, among other things, develops and sells many interesting accessories for RaspberryPi.
 
 The sources of Adafruit also contains a library to allow Python code to access the sensor data. Unfortunately, at the moment, the library has not been updated to support Python 3. We will use a class in Python 3, [DHTUtils](apps/greenhouse/raspberrypi/utils/dhtutils.py), as a wrapper that implements methods to make the call to the library Adafruit.
@@ -106,7 +107,22 @@ and adapt the [configs.py](apps/remotecontroller/raspberrypi/configs.py) with yo
 
 ### 2. SAP HCP
 
+#### Getting started with SAP HCP IoT
+
+Use the following documentations as step-by-step guide to:
+
+1. [Create Device Information in Internet of Things Services Cockpit](https://github.com/SAP/iot-starterkit/blob/master/src/prerequisites/cockpit)
+   - after device and device type creations, it's time to create message types **to** and **from** RaspberryPi. Create them as shown in the figures
+
+   ![MessageFromGreenhouse](/images/msg_fromGreenhouse.png)
+
+   ![MessageToGreenhouse](/images/msg_toGreenhouse.png)
+
+2. [Deploy the Message Management Service (MMS)](Deploy the Message Management Service (MMS)
+3. [Consume the messages with HANA XS using XSJS and OData](https://github.com/SAP/iot-starterkit/tree/master/src/apps/xs/consumption)
+
 #### Greenhouse App
+
 1. Create a [new XS App](https://github.com/SAP/iot-starterkit/tree/master/src/apps/xs/consumption#hana-xs-development) for the _Greenhouse_
 2. Copy all the code in `~/saphcpiot-greenhouse/apps/greenhouse/hcp/xs/iotmmsxs` to the HANA XS app previously created
 3. Adapt the following files to reflect information from your account and your HANA Schema:
@@ -127,8 +143,9 @@ call "HCP"."HCP_GRANT_ROLE_TO_USER"('<user_id>trial.iotmmsxs::iotaccess', '<user
 2. Adapt the [index.html](apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller/src/main/webapp/index.html) file at the bottom of the page (`createModel` method) to reflect information from your SAP HCP IoT Cookpit
 3. [Compile with Maven and Deploy](https://github.com/SAP/iot-starterkit/tree/master/src/apps/java/consumption#compilation-and-deployment)
 
-## Start & Stop
-Two different files are provided to start and stop the applications.
+### Start & Stop
+
+Two different scripts are provided to start and stop the applications.
 
 START:
 - [start_greenhouse.sh](apps/greenhouse/raspberrypi/start_greenhouse.sh)
@@ -145,7 +162,14 @@ cd /home/pi/code/greenhouse/
 sudo ./start_greenhouse.sh
 ```
 
-## Auto-Start&Stop
+### Miscellaneous
+
+#### RaspberryPi Email IP On Boot
+
+To access the RaspberryPi via SSH or other network protocols without a monitor and moving from network to network, we need to know the IP address. The [startup_mailer.py](app/greenhouse/raspberrypi/scripts/startup_mailer.py) utility do exactly this task. It's based on [RPi Email IP On Boot Debian](http://elinux.org/RPi_Email_IP_On_Boot_Debian) documentation by Cody Giles.
+
+#### Auto-Start&Stop
+
 Crontab tasks are used to automatically start and stop the scenario.
 
 | Application      | Wake-Up | Sleep   | Days            |
@@ -179,5 +203,5 @@ To access the RaspberryPi via SSH or other network protocols without a monitor a
 - [Controlling Relay Boards using RaspberryPi](https://elementztechblog.wordpress.com/2014/09/09/controlling-relay-boards-using-raspberrypi/)
 - [Controlling Servo Motors](http://razzpisampler.oreilly.com/ch05.html)
 
-## License
+### License
 All the code is released under [Creative Commons CC0 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/) license
