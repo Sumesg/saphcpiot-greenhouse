@@ -124,7 +124,7 @@ call "HCP"."HCP_GRANT_ROLE_TO_USER"('<user_id>trial.iotmmsxs::iotaccess', '<user
 #### Remote Controller App
 
 1. Open the Java project `~/saphcpiot-greenhouse/apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller` with Eclipse
-2. Adapt the [index.html](apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller/src/main/webapp/index.html) file at the bottom of the page to reflect information from your SAP HCP IoT Cookpit
+2. Adapt the [index.html](apps/remotecontroller/hcp/java/it.sapiotlab.greenhouse.remotecontroller/src/main/webapp/index.html) file at the bottom of the page (`createModel` method) to reflect information from your SAP HCP IoT Cookpit
 3. [Compile with Maven and Deploy](https://github.com/SAP/iot-starterkit/tree/master/src/apps/java/consumption#compilation-and-deployment)
 
 ## Start & Stop
@@ -167,7 +167,7 @@ Run `crontab -e` and paste the following entries:
 You can find the `cron-file.txt` for both the applications.
 
 ## Miscellaneous
-To access the RaspberryPi via SSH or other network protocols without a monitor and moving from network to network, we need to know the IP address. The [startup_mailer.py](app/greeanhouse/raspberrypi/scripts/startup_mailer.py) utility do exactly this task. It's based on [RPi Email IP On Boot Debian](http://elinux.org/RPi_Email_IP_On_Boot_Debian) documentation by Cody Giles.
+To access the RaspberryPi via SSH or other network protocols without a monitor and moving from network to network, we need to know the IP address. The [startup_mailer.py](app/greenhouse/raspberrypi/scripts/startup_mailer.py) utility do exactly this task. It's based on [RPi Email IP On Boot Debian](http://elinux.org/RPi_Email_IP_On_Boot_Debian) documentation by Cody Giles.
 
 ## Further Resources
 
