@@ -89,21 +89,29 @@ cd ~/
 mkdir code
 ```
 
+#### Greenhouse App
+
 Move code for the _greenhouse_ app to the right folder:
 
 ```shell
 cd ~/
-mv ~/saphcpiot-greenhouse/apps/greenhouse/raspberrypi ~/code/greenhouse
+mv ~/saphcpiot-greenhouse-master/apps/greenhouse/raspberrypi ~/code/greenhouse
 ```
 
-and adapt the [configs.py](apps/greenhouse/raspberrypi/configs.py) with your information
+and adapt the [configs.py](apps/greenhouse/raspberrypi/configs.py) with your information.
+
+#### Remote Controller App
 
 Copy and paste code for the _remotecontroller_ app to the right folder
 ```shell
 cd ~/
-mv ~/saphcpiot-greenhouse/apps/remotecontroller/raspberrypi ~/code/remotecontroller
+mv ~/saphcpiot-greenhouse-master/apps/remotecontroller/raspberrypi ~/code/remotecontroller
 ```
-and adapt the [configs.py](apps/remotecontroller/raspberrypi/configs.py) with your information
+and adapt the [configs.py](apps/remotecontroller/raspberrypi/configs.py) with your information.
+
+#### Logging
+
+Both _greenhouse_ and _remotecontroller_ save logs in their respective "logs" folders. You should not see output on the shell.
 
 ### 2. SAP HCP
 
