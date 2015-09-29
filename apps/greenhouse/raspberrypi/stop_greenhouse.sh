@@ -2,7 +2,7 @@
 
 sudoProgID="sudo ./greenhouse.py"
 pythonProgID="python3 ./greenhouse.py"
-cleanup_folder="/home/pi/code/greengarden/"
+cleanup_folder="/home/pi/code/greenhouse/"
 cleanup="sudo ./cleanup_greenhouse.py"
 
 sudoPid=$(eval ps ax|grep "$sudoProgID"|grep -iv "grep"| awk '{print $1}')
